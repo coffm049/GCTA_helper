@@ -16,21 +16,6 @@ gcta_wrapper () {
 	local npc=$7
 	local out=$8
 	
-	# Add to all values of the bash list
-	results=$(
-		for val in ${covars[@]}
-		do
-    			echo $((val + 2))
-		done
-		)
-	#######################################
-	# HARDCODE COVARIATE SELECTIONS FOR NOW
-	#######################################	
-	declare -a results=(1 2)
-
-	# Select only the covars selected from the covar variable
-	cut -d " " -f -${results[@]} ${covar} > temp_covar
-
 	# select only the pcs from hte PC data
 	cut -d " " -f -$((npc + 2)) ${PC} > temp_pc
 
