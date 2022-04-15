@@ -27,13 +27,18 @@ gcta_wrapper () {
 
 	# remove temporary dataframes
 	rm temp*
+	
+	# create a nice covariate list
+	bar=$(IFS=, ; echo "${covars[*]}")
 
 	# extract the heritability estimate
-	tail -7 delete.hsq | head -1 >> stored_herits
+	h=$(tail -7 delete.hsq | head -1)
+
+	# Save all of the data to file
+	echo "$h\t $mp \t $bar \t $npc" >> stored_herits
 
 	# remove temporary 
 	rm delete*	
 }
-
 
 
