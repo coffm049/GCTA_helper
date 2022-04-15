@@ -35,7 +35,7 @@ gcta_wrapper () {
 	h=$(tail -7 delete.hsq | head -1)
 
 	# Save all of the data to file
-	echo "$h\t $mp \t $bar \t $npc" >> stored_herits
+	echo "$h	$mp	$bar	$npc" >> stored_herits
 
 	# remove temporary 
 	rm delete*	
