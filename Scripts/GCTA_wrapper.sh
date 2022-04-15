@@ -3,8 +3,9 @@
 
 
 
-GCTA=/home/christian/Research/Stat_gen/tools/GCTA/gcta_1.93.2beta/gcta64
+#GCTA=/home/christian/Research/Stat_gen/tools/GCTA/gcta_1.93.2beta/gcta64
 
+GCTA=/panfs/roc/groups/3/rando149/coffm049/tools/gcta64
 
 gcta_wrapper () {
 	local grm=$1
@@ -23,7 +24,7 @@ gcta_wrapper () {
 	Rscript ../Scripts/select_n_join_PCs_covs.R ${covar} ${covars} 
 
 	# run GCTA
-	${GCTA} --grm $grm --reml --pheno $pheno --mpheno $mp --qcovar temp_all  --out $out
+	${GCTA} --grm $grm --reml --pheno $pheno --mpheno $mp --qcovar temp_all  --out delete 
 
 	# remove temporary dataframes
 	rm temp*
@@ -35,9 +36,9 @@ gcta_wrapper () {
 	h=$(tail -7 delete.hsq | head -1)
 
 	# Save all of the data to file
-	echo "$h	$mp	$bar	$npc" >> stored_herits
+	echo "$h	$mp	$bar	$npc" >> ${out}/stored_herits
 
-	# remove temporary 
+	# remove temporary herit file
 	rm delete*	
 }
 
