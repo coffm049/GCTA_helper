@@ -11,12 +11,11 @@ source /home/christian/Research/Stat_gen/tools/GCTA_helper/Scripts/GCTA_wrapper.
 
 DIR=/home/christian/Research/Stat_gen/tools/GCTA_helper/Example
 
-declare -a covs=(1 2)
 
 gcta_wrapper \
         ${DIR}/small \
         ${DIR}/small_covars.txt \
-        ${covs}  \
+        "1 2" \
         ${DIR}/small_pheno.phen \
         1 \
         ${DIR}/pcas.eigenvec \

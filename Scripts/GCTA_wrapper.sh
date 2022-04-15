@@ -9,7 +9,7 @@ GCTA=/home/christian/Research/Stat_gen/tools/GCTA/gcta_1.93.2beta/gcta64
 gcta_wrapper () {
 	local grm=$1
 	local covar=$2
-	local covars=$3
+	declare covars=($3)
 	local pheno=$4
 	local mp=$5
 	local PC=$6
@@ -20,14 +20,20 @@ gcta_wrapper () {
 	cut -d " " -f -$((npc + 2)) ${PC} > temp_pc
 
 	# join covars and PCs into one datset 
-	Rscript ../Scripts/Joining_covars_pcs.R 
-	
-	head temp_all	
+	Rscript ../Scripts/select_n_join_PCs_covs.R ${covar} ${covars} 
 
 	# run GCTA
 	${GCTA} --grm $grm --reml --pheno $pheno --mpheno $mp --qcovar temp_all  --out $out
+
+	# remove temporary dataframes
+	rm temp*
+
+	# extract the heritability estimate
+	tail -7 delete.hsq | head -1 >> stored_herits
+
+	# remove temporary 
+	rm delete*	
 }
 
-#  
 
 
