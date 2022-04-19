@@ -1,6 +1,9 @@
+library(tidyverse)
+
 # To print the command and its result in the output.
 options(echo=F, message=F)
 suppressPackageStartupMessages(library(tidyverse))
+
 
 # Get the arguments as a character vector.
 myargs = commandArgs(trailingOnly=TRUE)

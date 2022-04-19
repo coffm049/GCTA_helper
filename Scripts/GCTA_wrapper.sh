@@ -21,7 +21,7 @@ gcta_wrapper () {
 	cut -d " " -f -$((npc + 2)) ${PC} > temp_pc
 
 	# join covars and PCs into one datset 
-	Rscript ../Scripts/select_n_join_PCs_covs.R ${covar} ${covars} 
+	Rscript /panfs/roc/groups/3/rando149/coffm049/tools/GCTA_helper/Scripts/select_n_join_PCs_covs.R ${covar} ${covars} 
 
 	# run GCTA
 	${GCTA} --grm $grm --reml --pheno $pheno --mpheno $mp --qcovar temp_all  --out delete 
