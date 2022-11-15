@@ -1,30 +1,42 @@
+#!/usr/bin/env Rscript
 # To print the command and its result in the output.
 options(echo=F, message=F)
 suppressPackageStartupMessages(library(tidyverse))
-
-# Get the arguments as a character vector.
-myargs = commandArgs(trailingOnly=TRUE)
+library(argparse)
 
 
-# Get columns for keeping
-keep_vars <- c(1, 2, as.numeric(myargs[2:length(myargs)]))
+parser <- ArgumentParser()
 
+# specify our desired options 
+# by default ArgumentParser will add an help option 
+parser$add_argument("-c", "--Covariate", type = "character",
+    help="Path to covariate file", metavar = "PATH_TO_COVARIATES")
+parser$add_argument("-i", "--Covariates", type = "character", 
+    help="Names of variables to control for", nargs = "+")
+parser$add_argument("-p", "--PC", type="character",  
+    help="Path to prinicipal component file (.eigenvec)",
+    metavar="FILE_PATH")
+parser$add_argument("-n", "--npc", default=0, type = "integer", 
+    help = "number of principal components to include")
+
+args <- parser$parse_args()
 
 
 # Load specific covariates
-df <- read_table(myargs[1], col_names= F)[,keep_vars]
-# rename columns for joining
-colnames(df) <- paste0("X", seq(1, dim(df)[2]))
+df <- read_table(args$Covariate, col_names = TRUE) %>%
+	select("FID", "IID", args$Covariates) %>%
+	mutate(FID = as.character(FID), IID = as.character(IID))
+
 
 # Read the pc data frame
-read_table("temp_pc", col_names=F) %>%
-	# join the pcs and the covars by FID and IID
-	inner_join(df, by = c("X1", "X2")) %>%
-	# save the combined data into a temp file
-        write.table("temp_all", row.names=F, col.names = F, quote=F)
-
-
-
+read_table(args$PC, col_names=F) %>%
+	rename(FID = X1, IID= X2) %>%
+	select(1:(args$npc+2)) %>%
+	mutate(FID = as.character(FID), IID = as.character(IID)) %>%
+        # join the pcs and the covars by FID and IID
+        inner_join(df, by = c("FID", "IID")) %>%
+        # save the combined data into a temp file
+        write.table("temp_covars", row.names=F, col.names = F, quote=F)
 
 
 

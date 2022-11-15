@@ -4,6 +4,8 @@
 
 
 GCTA=/home/christian/Research/Stat_gen/tools/GCTA/gcta_1.93.2beta/gcta64
+R=/usr/bin/Rscript
+SEL=/home/christian/Research/Stat_gen/tools/GCTA_helper/Scripts/select_n_join_PCs_covs.R
 
 
 gcta_wrapper () {
@@ -16,29 +18,25 @@ gcta_wrapper () {
 	local npc=$7
 	local out=$8
 	
-	# select only the pcs from hte PC data
-	cut -d " " -f -$((npc + 2)) ${PC} > temp_pc
-
 	# join covars and PCs into one datset 
-	Rscript ../Scripts/select_n_join_PCs_covs.R ${covar} ${covars} 
-
+	$R $SEL -c $covar -i $covars -p $PC -n $npc 
+	
 	# run GCTA
-	${GCTA} --grm $grm --reml --pheno $pheno --mpheno $mp --qcovar temp_all  --out $out
+	${GCTA} --grm $grm --reml --pheno $pheno --mpheno $mp --qcovar temp_covars --out $out
 
 	# remove temporary dataframes
-	rm temp*
+	rm temp_covars
 	
 	# create a nice covariate list
 	bar=$(IFS=, ; echo "${covars[*]}")
 
 	# extract the heritability estimate
-	h=$(tail -7 delete.hsq | head -1)
+	h=$(tail -7 ${out}.hsq | head -1)
 
 	# Save all of the data to file
 	echo "$h	$mp	$bar	$npc" >> stored_herits
-
-	# remove temporary 
-	rm delete*	
+	
+	# delete hsq and log files
+	rm ${out}*
 }
-
 

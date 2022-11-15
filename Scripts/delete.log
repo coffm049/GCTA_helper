@@ -1,0 +1,40 @@
+*******************************************************************
+* Genome-wide Complex Trait Analysis (GCTA)
+* version 1.93.2 beta Linux
+* (C) 2010-present, Jian Yang, The University of Queensland
+* Please report bugs to Jian Yang <jian.yang.qt@gmail.com>
+*******************************************************************
+Analysis started at 15:45:20 CST on Mon Nov 14 2022.
+Hostname: christian-laptop
+
+Accepted options:
+--grm /home/christian/Research/Stat_gen/tools/Basu_herit/Example/Input_files/grm
+--reml
+--pheno /home/christian/Research/Stat_gen/tools/Basu_herit/Example/Input_files/pheno.phen
+--mpheno 1
+--qcovar temp_covars
+--out delete
+
+Note: This is a multi-thread program. You could specify the number of threads by the --thread-num option to speed up the computation if there are multiple processors in your machine.
+
+Reading IDs of the GRM from [/home/christian/Research/Stat_gen/tools/Basu_herit/Example/Input_files/grm.grm.id].
+5000 IDs read from [/home/christian/Research/Stat_gen/tools/Basu_herit/Example/Input_files/grm.grm.id].
+Reading the GRM from [/home/christian/Research/Stat_gen/tools/Basu_herit/Example/Input_files/grm.grm.bin].
+GRM for 5000 individuals are included from [/home/christian/Research/Stat_gen/tools/Basu_herit/Example/Input_files/grm.grm.bin].
+Reading phenotypes from [/home/christian/Research/Stat_gen/tools/Basu_herit/Example/Input_files/pheno.phen].
+There are 6 traits specified in the file [/home/christian/Research/Stat_gen/tools/Basu_herit/Example/Input_files/pheno.phen].
+Trait #1 is included for analysis.
+Non-missing phenotypes of 5001 individuals are included from [/home/christian/Research/Stat_gen/tools/Basu_herit/Example/Input_files/pheno.phen].
+Reading quantitative covariates from [temp_covars].
+4 quantitative covariate(s) of 5000 individuals read from [temp_covars].
+
+4 quantitative variable(s) included as covariate(s).
+5000 individuals are in common in these files.
+
+Performing  REML analysis ... (Note: may take hours depending on sample size).
+5000 observations, 5 fixed effect(s), and 2 variance component(s)(including residual variance).
+Calculating prior values of variance components by EM-REML ...
+Updated prior values: 0.517289 0.472596
+logL: -2242.14
+Running AI-REML algorithm ...
+Iter.	logL	V(G)	V(e)	
